@@ -11,7 +11,7 @@ enum ExpenseMapper {
 
     private static let dateFormatter = ISO8601DateFormatter()
 
-    static func map(_ dictionaries: [[String: Any]]) -> [Expense] {
+    static func map(_ dictionaries: [[AnyHashable: Any]]) -> [Expense] {
         dictionaries.compactMap { dictionary in
             guard
                 let id = dictionary["id"] as? String,
