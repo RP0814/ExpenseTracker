@@ -11,8 +11,12 @@ final class ExpenseService {
 
     private let apiClient: ExpenseAPIClient
 
-    init(apiClient: ExpenseAPIClient = ExpenseAPIClient()) {
+    init(apiClient: ExpenseAPIClient) {
         self.apiClient = apiClient
+    }
+
+    convenience init() {
+        self.init(apiClient: ExpenseAPIClient())
     }
 
     func fetchExpenses(from url: URL) async throws -> [Expense] {
