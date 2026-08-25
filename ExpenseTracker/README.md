@@ -88,5 +88,3 @@ API
 The application consumes the provided JSON endpoint:
 
 https://www.jsonkeeper.com/b/DYZJF
-
-
