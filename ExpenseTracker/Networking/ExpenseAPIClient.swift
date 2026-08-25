@@ -7,7 +7,13 @@
 
 import Foundation
 
-final class ExpenseAPIClient {
+protocol ExpenseAPIClientProtocol {
+    func fetchExpenses(
+        from url: URL
+    ) async throws -> [[String: Any]]
+}
+
+final class ExpenseAPIClient: ExpenseAPIClientProtocol {
 
     enum APIError: Error {
         case invalidResponse

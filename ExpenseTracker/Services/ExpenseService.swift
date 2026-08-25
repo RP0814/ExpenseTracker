@@ -9,9 +9,9 @@ import Foundation
 
 final class ExpenseService {
 
-    private let apiClient: ExpenseAPIClient
+    private let apiClient: ExpenseAPIClientProtocol
 
-    init(apiClient: ExpenseAPIClient) {
+    init(apiClient: ExpenseAPIClientProtocol) {
         self.apiClient = apiClient
     }
 
