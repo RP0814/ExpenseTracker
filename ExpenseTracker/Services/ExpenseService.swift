@@ -10,21 +10,36 @@ import Foundation
 final class ExpenseService {
 
     private let apiClient: ExpenseAPIClientProtocol
+    private let transformsUsingObjectiveC: Bool
 
-    init(apiClient: ExpenseAPIClientProtocol) {
+    init(
+        apiClient: ExpenseAPIClientProtocol,
+        transformsUsingObjectiveC: Bool = true
+    ) {
         self.apiClient = apiClient
+        self.transformsUsingObjectiveC = transformsUsingObjectiveC
     }
 
     convenience init() {
-        self.init(apiClient: ExpenseAPIClient())
+
+        self.init(
+            apiClient: ObjectiveCExpenseAPIClient(),
+            transformsUsingObjectiveC: false
+        )
     }
 
     func fetchExpenses(from url: URL) async throws -> [Expense] {
-        let rawExpenses = try await apiClient.fetchExpenses(from: url)
 
-        let transformedExpenses =
-            ExpenseTransformer.transformExpenses(rawExpenses)
+        let expenses =
+            try await apiClient.fetchExpenses(from: url)
 
-        return ExpenseMapper.map(transformedExpenses)
+        if transformsUsingObjectiveC {
+            let transformedExpenses =
+                ExpenseTransformer.transformExpenses(expenses)
+
+            return ExpenseMapper.map(transformedExpenses)
+        }
+
+        return ExpenseMapper.map(expenses)
     }
 }
